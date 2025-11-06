@@ -5,6 +5,7 @@
 from dotenv import load_dotenv
 import os
 from google import genai
+from datetime import datetime, date
 
 # .env 파일에서 환경 변수 불러오기
 load_dotenv()
@@ -17,9 +18,20 @@ if not api_key:
 # API 키를 명시적으로 전달하여 클라이언트 생성
 client = genai.Client(api_key=api_key)
 
+# Get current date
+today = date.today()
+current_date = today.strftime("%Y-%m-%d")
+
 # 간단한 요청(예제)
 response = client.models.generate_content(
     model="gemini-2.5-flash",
-    contents="How many days until Christmas?"
+    contents=f"Today is {current_date}. How many days until Christmas?",
+)
+print(response.text)
+
+# 간단한 요청(예제)
+response = client.models.generate_content(
+    model="gemini-2.5-flash",
+    contents=f"What is the weather usually like around that time?",
 )
 print(response.text)
